@@ -32,7 +32,7 @@ resource "random_string" "random" {
 # Creates Azure Compute Gallery (formerly Shared Image Gallery)
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery
 resource "azurerm_shared_image_gallery" "acg" {
-  name                = "acg${random_string.random.id}"
+  name                = "image-gallery-${random_string.random.id}"
   resource_group_name = azurerm_resource_group.acgrg.name
   location            = azurerm_resource_group.acgrg.location
   description         = "VM images"
