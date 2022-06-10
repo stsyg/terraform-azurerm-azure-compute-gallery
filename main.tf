@@ -103,8 +103,8 @@ resource "azurerm_role_definition" "aibIdentity" {
   }
 
   assignable_scopes = [
-#      subscription_id
-    data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
+    azurerm_resource_group.acgrg.id
+#    data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
 }
 
