@@ -90,7 +90,7 @@ resource "azurerm_user_assigned_identity" "aib" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition
 resource "azurerm_role_definition" "aibIdentity" {
   name        = "aibIdentityRole"
-  scope       = azurerm_resource_group.acgrg.name
+  scope       = azurerm_resource_group.acgrg.id
 #  scope       = data.azurerm_subscription.current.id
   description = "Azure Image Builder Image Definition Dev"
 
