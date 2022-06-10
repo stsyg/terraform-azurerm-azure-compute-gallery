@@ -47,11 +47,15 @@ resource "azurerm_shared_image_gallery" "acg" {
 # Create image definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image
 resource "azurerm_shared_image" "vmssimg" {
-  name                = "vmss-image"
-  gallery_name        = azurerm_shared_image_gallery.acg.name
-  resource_group_name = azurerm_resource_group.acgrg.name
-  location            = azurerm_resource_group.acgrg.location
-  os_type             = "Windows"
+  description           = "VMSS image definition"
+  eula                  = "https://contoso.com/license"
+  privacy_statement_uri = "https://contoso.com/privacy"
+  release_note_uri      = "https://contoso.com/releasenotes"
+  name                  = "vmss-image"
+  gallery_name          = azurerm_shared_image_gallery.acg.name
+  resource_group_name   = azurerm_resource_group.acgrg.name
+  location              = azurerm_resource_group.acgrg.location
+  os_type               = "Windows"
 
   identifier {
     publisher = "MicrosoftWindowsServer"
@@ -84,11 +88,11 @@ resource "azurerm_shared_image" "vmssimg" {
 
 # Create image
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
-resource "azurerm_image" "vmss" {
-  name                = "vmss-win2019"
-  location            = azurerm_resource_group.acgrg.location
-  resource_group_name = azurerm_resource_group.acgrg.name
-
+# resource "azurerm_image" "vmss" {
+#   name                = "vmss-win2019"
+#   location            = azurerm_resource_group.acgrg.location
+#   resource_group_name = azurerm_resource_group.acgrg.name
+# 
 #   os_disk {
 #     os_type  = "Windows"
 #     os_state = "Generalized"
