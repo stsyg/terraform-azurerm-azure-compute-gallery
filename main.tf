@@ -75,7 +75,6 @@ resource "azurerm_image" "vmss" {
   os_disk {
     os_type  = "Windows"
     os_state = "Generalized"
-    blob_uri = "{blob_uri}"
     size_gb  = 128
   }
 }
