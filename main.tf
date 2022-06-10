@@ -44,26 +44,26 @@ resource "azurerm_shared_image_gallery" "acg" {
   }
 }
 
-# # Create image definition
-# # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image
-# resource "azurerm_shared_image" "vmssimg" {
-#   name                = "vmss-image"
-#   gallery_name        = azurerm_shared_image_gallery.acg.name
-#   resource_group_name = azurerm_resource_group.acgrg.name
-#   location            = azurerm_resource_group.acgrg.location
-#   os_type             = "Windows"
-# 
-#   identifier {
-#     publisher = "MicrosoftWindowsServer"
-#     offer     = "WindowsServer"
-#     sku       = "2019-Datacenter"
-#   }
-# 
-#   tags = {
-#     environment = "Dev"
-#     provisioner = "Terraform"
-#   }
-# }
+# Create image definition
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image
+resource "azurerm_shared_image" "vmssimg" {
+  name                = "vmss-image"
+  gallery_name        = azurerm_shared_image_gallery.acg.name
+  resource_group_name = azurerm_resource_group.acgrg.name
+  location            = azurerm_resource_group.acgrg.location
+  os_type             = "Windows"
+
+  identifier {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
+  }
+
+  tags = {
+    environment = "Dev"
+    provisioner = "Terraform"
+  }
+}
 
 # # Create image
 # # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
