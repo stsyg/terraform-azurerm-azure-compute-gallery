@@ -12,6 +12,12 @@ terraform {
 resource "azurerm_resource_group" "acgrg" {
   location = var.deploy_location
   name     = var.rg_shared_name
+
+    tags = {
+    environment = "Dev"
+    app         = "Azure Compute Gallery"
+    provisioner = "Terraform"
+  }
 }
 
 # Generates a random string (consisting of four characters)
@@ -32,8 +38,9 @@ resource "azurerm_shared_image_gallery" "acg" {
   description         = "VM images"
 
   tags = {
-    Environment = "Dev"
-    App         = "Azure Compute Gallery"
+    environment = "Dev"
+    app         = "Azure Compute Gallery"
+    provisioner = "Terraform"
   }
 }
 
@@ -52,8 +59,9 @@ resource "azurerm_shared_image" "vmssimg" {
     sku       = "22h2-vmss-win2019"
   }
 
-    tags = {
-    Environment = "Dev"
-    Sku = "VMSS-Win2019"
+  tags = {
+    environment = "Dev"
+    sku = "VMSS-Win2019"
+    provisioner = "Terraform"
   }
 }
