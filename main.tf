@@ -8,7 +8,7 @@ terraform {
         }
 }
 
-# Creates resource group
+# Create resource group
 resource "azurerm_resource_group" "acgrg" {
   location = var.deploy_location
   name     = var.rg_shared_name
@@ -20,7 +20,7 @@ resource "azurerm_resource_group" "acgrg" {
   }
 }
 
-# Generates a random string (consisting of four characters)
+# Generate a random string (consisting of four characters)
 # https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
 resource "random_string" "random" {
   length  = 4
@@ -29,7 +29,7 @@ resource "random_string" "random" {
 }
 
 
-# Creates Azure Compute Gallery (formerly Shared Image Gallery)
+# Create Azure Compute Gallery (formerly Shared Image Gallery)
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery
 resource "azurerm_shared_image_gallery" "acg" {
   name                = "image_gallery_${random_string.random.id}"
@@ -44,7 +44,7 @@ resource "azurerm_shared_image_gallery" "acg" {
   }
 }
 
-# Creates image definition
+# Create image definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image
 resource "azurerm_shared_image" "vmssimg" {
   name                = "vmss-image"
@@ -63,5 +63,20 @@ resource "azurerm_shared_image" "vmssimg" {
     environment = "Dev"
     sku = "VMSS-Win2019"
     provisioner = "Terraform"
+  }
+}
+
+# Create image
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
+resource "azurerm_image" "vmss" {
+  name                = "vmss-win2019"
+  location            = azurerm_resource_group.acgrg.location
+  resource_group_name = azurerm_resource_group.acgrg.name
+
+  os_disk {
+    os_type  = "Windows"
+    os_state = "Generalized"
+    blob_uri = "{blob_uri}"
+    size_gb  = 30
   }
 }
