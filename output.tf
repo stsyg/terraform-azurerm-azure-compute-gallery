@@ -8,6 +8,6 @@ output "compute_gallery" {
   value       = azurerm_shared_image_gallery.acg.name
 }
 
-# output "current_subscription_display_name" {
-#   value = data.azurerm_subscription.current.display_name
-# }
+output "current_subscription_display_name" {
+  value = data.azurerm_subscription.current.display_name
+}
