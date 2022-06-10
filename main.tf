@@ -73,10 +73,13 @@ resource "azurerm_shared_image" "vmssimg" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity
 # aibIdentity = Azure Image Builder Identity
 resource "azurerm_user_assigned_identity" "aib" {
+  name = "aibIdentity"
   resource_group_name = azurerm_resource_group.acgrg.name
   location            = azurerm_resource_group.acgrg.location
-
-  name = "aibIdentity"
+  tags = {
+    environment = "Dev"
+    provisioner = "Terraform"
+  }
 }
 
 # Create an Azure role definition
@@ -86,7 +89,7 @@ data "azurerm_subscription" "primary" {
 }
 
 resource "azurerm_role_definition" "aibIdentity" {
-  name        = data.azurerm_user_assigned_identity.aib.name
+  name        = "aibIdentityRole"
   scope       = data.azurerm_subscription.primary.id
   description = "Azure Image Builder Image Definition Dev"
 
@@ -100,6 +103,10 @@ resource "azurerm_role_definition" "aibIdentity" {
   assignable_scopes = [
     data.azurerm_subscription.primary.id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
+  tags = {
+    environment = "Dev"
+    provisioner = "Terraform"
+  }
 }
 
 # # Update image definition version
