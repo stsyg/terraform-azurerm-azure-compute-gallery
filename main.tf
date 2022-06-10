@@ -103,10 +103,6 @@ resource "azurerm_role_definition" "aibIdentity" {
   assignable_scopes = [
     data.azurerm_subscription.primary.id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
-  tags = {
-    environment = "Dev"
-    provisioner = "Terraform"
-  }
 }
 
 # # Update image definition version
