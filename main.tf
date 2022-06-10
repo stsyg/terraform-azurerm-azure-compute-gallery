@@ -54,29 +54,28 @@ resource "azurerm_shared_image" "vmssimg" {
   os_type             = "Windows"
 
   identifier {
-    publisher = "SergiyDevLab"
-    offer     = "Windows-Server"
-    sku       = "22h2-vmss-win2019"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
   }
 
   tags = {
     environment = "Dev"
-    sku = "VMSS-Win2019"
     provisioner = "Terraform"
   }
 }
 
-# Create image
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
-resource "azurerm_image" "vmss" {
-  name                = "vmss-win2019"
-  location            = azurerm_resource_group.acgrg.location
-  resource_group_name = azurerm_resource_group.acgrg.name
-
-  os_disk {
-    os_type  = "Windows"
-    os_state = "Generalized"
-    blob_uri = "{blob_uri}"
-    size_gb  = 30
-  }
-}
+# # Create image
+# # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
+# resource "azurerm_image" "vmss" {
+#   name                = "vmss-win2019"
+#   location            = azurerm_resource_group.acgrg.location
+#   resource_group_name = azurerm_resource_group.acgrg.name
+# 
+#   os_disk {
+#     os_type  = "Windows"
+#     os_state = "Generalized"
+#     blob_uri = "{blob_uri}"
+#     size_gb  = 30
+#   }
+# }
