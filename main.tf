@@ -65,6 +65,23 @@ resource "azurerm_shared_image" "vmssimg" {
   }
 }
 
+# # Update image definition version
+# # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_version
+# resource "azurerm_shared_image_version" "vmssimg" {
+#   name                = "0.0.1"
+#   gallery_name        = data.azurerm_shared_image.vmssimg.gallery_name
+#   image_name          = data.azurerm_shared_image.vmssimg.name
+#   resource_group_name = data.azurerm_shared_image.vmssimg.resource_group_name
+#   location            = data.azurerm_shared_image.vmssimg.location
+#   managed_image_id    = data.azurerm_image.vmssimg.id
+# 
+#   target_region {
+#     name                   = data.azurerm_shared_image.vmssimg.location
+#     regional_replica_count = 5
+#     storage_account_type   = "Standard_LRS"
+#   }
+# }
+
 # Create image
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
 resource "azurerm_image" "vmss" {
@@ -72,9 +89,9 @@ resource "azurerm_image" "vmss" {
   location            = azurerm_resource_group.acgrg.location
   resource_group_name = azurerm_resource_group.acgrg.name
 
-  os_disk {
-    os_type  = "Windows"
-    os_state = "Generalized"
-    size_gb  = 128
-  }
+#   os_disk {
+#     os_type  = "Windows"
+#     os_state = "Generalized"
+#     size_gb  = 128
+#   }
 }
