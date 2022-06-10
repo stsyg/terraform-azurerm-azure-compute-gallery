@@ -21,7 +21,7 @@ resource "azurerm_resource_group" "acgrg" {
 }
 
 data "azurerm_subscription" "current" {
-    subscription_id = subscription_id
+#    subscription_id = subscription_id
 }
 
 # Generate a random string (consisting of four characters)
@@ -102,7 +102,7 @@ resource "azurerm_role_definition" "aibIdentity" {
   }
 
   assignable_scopes = [
-    data.azurerm_subscription.current.subscription_id, # /subscriptions/00000000-0000-0000-0000-000000000000
+    data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
 }
 
