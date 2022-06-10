@@ -47,8 +47,13 @@ resource "azurerm_shared_image" "vmssimg" {
   os_type             = "Windows"
 
   identifier {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "office-365"
-    sku       = "20h2-evd-o365pp"
+    publisher = "SergiyDevLab"
+    offer     = "Windows-Server"
+    sku       = "22h2-vmss-win2019"
+  }
+
+    tags = {
+    Environment = "Dev"
+    Sku = "VMSS-Win2019"
   }
 }
