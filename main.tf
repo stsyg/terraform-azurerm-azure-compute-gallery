@@ -39,7 +39,7 @@ resource "azurerm_shared_image_gallery" "acg" {
 
 # Creates image definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image
-resource "azurerm_shared_image" "example" {
+resource "azurerm_shared_image" "vmssimg" {
   name                = "vmss-image"
   gallery_name        = azurerm_shared_image_gallery.acg.name
   resource_group_name = azurerm_resource_group.acgrg.name
