@@ -3,24 +3,46 @@ Terraform used to configure Azure Compute Gallery. It also creates image definit
 
 ## Pre-requsites
 
-1. Register for Azure Image Builder Feature
+Register for Azure Image Builder Feature. Wait until RegistrationState is set to 'Registered'
 ```
 Register-AzProviderFeature -FeatureName VirtualMachineTemplatePreview -ProviderNamespace Microsoft.VirtualMachineImages
 Get-AzProviderFeature -FeatureName VirtualMachineTemplatePreview -ProviderNamespace Microsoft.VirtualMachineImages
 ```
-Wait until RegistrationState is set to 'Registered'
 
-2. Check you are registered for the providers, ensure RegistrationState is set to 'Registered'.
+Check you are registered for the providers, ensure RegistrationState is set to 'Registered'.
 ```
 Get-AzResourceProvider -ProviderNamespace Microsoft.VirtualMachineImages
 Get-AzResourceProvider -ProviderNamespace Microsoft.Storage 
 Get-AzResourceProvider -ProviderNamespace Microsoft.Compute
 Get-AzResourceProvider -ProviderNamespace Microsoft.KeyVault
 ```
-3. If they do not saw registered, run the commented out code below.
+
+If they do not saw registered, run the commented out code below.
 ```
 Register-AzResourceProvider -ProviderNamespace Microsoft.VirtualMachineImages
 Register-AzResourceProvider -ProviderNamespace Microsoft.Storage
 Register-AzResourceProvider -ProviderNamespace Microsoft.Compute
 Register-AzResourceProvider -ProviderNamespace Microsoft.KeyVault
+```
+
+## Check Azure Marketplace images
+
+Search for Publusher name. Look for MicrosoftWindowsServer for Microsoft based OS
+
+```
+Get-AzVMImagePublisher -Location canadacentral
+```
+
+## Check for Image Offer
+
+Choose WindowsServer for Microsoft Windows Server offers
+```
+Get-AzVMImageOffer -Location canadacentral -PublisherName MicrosoftWindowsServer
+```
+
+## Check Image SKU
+
+Choose required image SKU, e.g. 2019-Datacenter
+```
+Get-AzVMImageSku -Location canadacentral -PublisherName MicrosoftWindowsServer -Offer WindowsServer
 ```
