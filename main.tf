@@ -20,6 +20,10 @@ resource "azurerm_resource_group" "acgrg" {
   }
 }
 
+data "azurerm_subscription" "current" {
+    subscription_id = var.subscription
+}
+
 # Generate a random string (consisting of four characters)
 # https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
 resource "random_string" "random" {
@@ -84,10 +88,6 @@ resource "azurerm_user_assigned_identity" "aib" {
 
 # Create an Azure role definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition
-
-# data "azurerm_subscription" "current" {
-# }
-
 resource "azurerm_role_definition" "aibIdentity" {
   name        = "aibIdentityRole"
   scope       = azurerm_resource_group.acgrg.name
@@ -102,7 +102,7 @@ resource "azurerm_role_definition" "aibIdentity" {
   }
 
   assignable_scopes = [
-    data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
+    data.azurerm_subscription.current.subscription_id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
 }
 

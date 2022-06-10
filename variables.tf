@@ -9,3 +9,9 @@ variable "rg_shared_name" {
   default     = "azure-compute-gallery-rg"
   description = "Name of the Resource group in which to deploy shared resources"
 }
+
+variable "rsubscription" {
+  type        = string
+  default     = ARM_SUBCRIPTION_ID
+  description = "Subscription ID where resources will be deployed"
+}
