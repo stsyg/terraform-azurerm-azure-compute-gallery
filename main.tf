@@ -9,7 +9,7 @@ terraform {
 }
 
 # Creates resource group
-resource "azurerm_resource_group" "sigrg" {
+resource "azurerm_resource_group" "acgrg" {
   location = var.deploy_location
   name     = var.rg_shared_name
 }
@@ -25,10 +25,10 @@ resource "random_string" "random" {
 
 # Creates Azure Compute Gallery (formerly Shared Image Gallery)
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery
-resource "azurerm_shared_image_gallery" "sig" {
-  name                = "sig${random_string.random.id}"
-  resource_group_name = azurerm_resource_group.sigrg.name
-  location            = azurerm_resource_group.sigrg.location
+resource "azurerm_shared_image_gallery" "acg" {
+  name                = "acg${random_string.random.id}"
+  resource_group_name = azurerm_resource_group.acgrg.name
+  location            = azurerm_resource_group.acgrg.location
   description         = "VM images"
 
   tags = {
@@ -40,10 +40,10 @@ resource "azurerm_shared_image_gallery" "sig" {
 # Creates image definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image
 resource "azurerm_shared_image" "example" {
-  name                = "avd-image"
-  gallery_name        = azurerm_shared_image_gallery.sig.name
-  resource_group_name = azurerm_resource_group.sigrg.name
-  location            = azurerm_resource_group.sigrg.location
+  name                = "vmss-image"
+  gallery_name        = azurerm_shared_image_gallery.acg.name
+  resource_group_name = azurerm_resource_group.acgrg.name
+  location            = azurerm_resource_group.acgrg.location
   os_type             = "Windows"
 
   identifier {
