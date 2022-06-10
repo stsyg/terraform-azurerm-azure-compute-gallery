@@ -90,7 +90,7 @@ resource "azurerm_user_assigned_identity" "aib" {
 
 resource "azurerm_role_definition" "aibIdentity" {
   name        = "aibIdentityRole"
-  scope       = data.azurerm_resource_group.acgrg.name
+  scope       = azurerm_resource_group.acgrg.name
 #  scope       = data.azurerm_subscription.current.id
   description = "Azure Image Builder Image Definition Dev"
 
@@ -102,7 +102,7 @@ resource "azurerm_role_definition" "aibIdentity" {
   }
 
   assignable_scopes = [
-    data.azurerm_resource_group.acgrg.name  
+    azurerm_resource_group.acgrg.name  
 #    data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
 }
