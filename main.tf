@@ -69,6 +69,16 @@ resource "azurerm_shared_image" "vmssimg" {
   }
 }
 
+# Create an Azure user-assigned managed identity
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity
+# aibIdentity = Azure Image Builder Identity
+resource "azurerm_user_assigned_identity" "example" {
+  resource_group_name = azurerm_resource_group.acgrg.name
+  location            = azurerm_resource_group.acgrg.location
+
+  name = "aibIdentity"
+}
+
 # # Update image definition version
 # # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_version
 # resource "azurerm_shared_image_version" "vmssimg" {
@@ -98,4 +108,4 @@ resource "azurerm_shared_image" "vmssimg" {
 #     os_state = "Generalized"
 #     size_gb  = 128
 #   }
-}
+# }
