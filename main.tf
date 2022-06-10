@@ -95,7 +95,7 @@ resource "azurerm_role_definition" "aibIdentity" {
   description = "Azure Image Builder Image Definition Dev"
 
   permissions {
-     actions     = ["*"]
+     actions     = ["Microsoft.Compute/locations/usages/read"]
 #    actions     = ["Microsoft.Compute/images/write",
 #                   "Microsoft.Compute/images/read",
 #                   "Microsoft.Compute/images/delete"]
