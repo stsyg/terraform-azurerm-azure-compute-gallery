@@ -21,7 +21,7 @@ resource "azurerm_resource_group" "acgrg" {
 }
 
 data "azurerm_subscription" "current" {
-    subscription_id = ARM_SUBCRIPTION_ID
+    subscription_id = subscription_id
 }
 
 # Generate a random string (consisting of four characters)
