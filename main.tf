@@ -85,7 +85,7 @@ resource "azurerm_user_assigned_identity" "aib" {
 # Create an Azure role definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition
 
-data "azurerm_subscription" "primary" {
+data "azurerm_subscription" "current" {
 }
 
 resource "azurerm_role_definition" "aibIdentity" {
