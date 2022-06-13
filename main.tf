@@ -127,7 +127,7 @@ resource "azurerm_role_assignment" "aibIdentityAssignment" {
 #  name               = "00000000-0000-0000-0000-000000000000"
   scope              = data.azurerm_subscription.current.id
   role_definition_id = azurerm_role_definition.aibIdentity.role_definition_resource_id
-  principal_id       = data.azurerm_user_assigned_identity.aib.object_id
+  principal_id       = azurerm_user_assigned_identity.aib.object_id
 }
 
 # # Update image definition version
