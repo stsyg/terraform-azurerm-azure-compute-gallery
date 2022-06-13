@@ -20,7 +20,7 @@ output "id" {
 
 output "account_object_d" {
   description = "AIB managed identity Object ID"
-  value = data.azurerm_user_assigned_identity.aibfetch.object_id
+  value = data.azurerm_user_assigned_identity.aibfetch.principal_id
 }
 
 output "account_client_id" {
