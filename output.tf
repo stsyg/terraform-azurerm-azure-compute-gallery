@@ -18,8 +18,8 @@ output "id" {
   value = data.azurerm_resource_group.vmssrg.id
 }
 
-output "account_object_d" {
-  description = "AIB managed identity Object ID"
+output "account_object_id" {
+  description = "AIB managed identity Object (Principal) ID"
   value = data.azurerm_user_assigned_identity.aibfetch.principal_id
 }
 
