@@ -120,6 +120,16 @@ resource "azurerm_role_definition" "aibIdentity" {
   ]
 }
 
+# Assign previously created role definition to the adintified scope
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment
+
+resource "azurerm_role_assignment" "aibIdentityAssignment" {
+#  name               = "00000000-0000-0000-0000-000000000000"
+  scope              = data.azurerm_subscription.current.id
+  role_definition_id = azurerm_role_definition.aibIdentity.role_definition_resource_id
+  principal_id       = data.azurerm_user_assigned_identity.aib.object_id
+}
+
 # # Update image definition version
 # # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_version
 # resource "azurerm_shared_image_version" "vmssimg" {
