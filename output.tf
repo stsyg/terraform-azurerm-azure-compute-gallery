@@ -20,10 +20,10 @@ output "id" {
 
 output "account_object_d" {
   description = "AIB managed identity Object ID"
-  value = data.azurerm_user_assigned_identity.aib.object_id
+  value = azurerm_user_assigned_identity.aib.object_id
 }
 
 output "account_client_id" {
   description = "AIB managed identity Client ID"
-  value = data.azurerm_user_assigned_identity.aib.client_id
+  value = azurerm_user_assigned_identity.aib.client_id
 }
