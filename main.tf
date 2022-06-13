@@ -20,6 +20,12 @@ resource "azurerm_resource_group" "acgrg" {
   }
 }
 
+# Fetch VMSS RG details
+data "azurerm_resource_group" "vmssrg" {
+  name = "st-vmss-rg"
+}
+
+# Fetch subscription details
 data "azurerm_subscription" "current" {
 #    subscription_id = subscription_id
 }

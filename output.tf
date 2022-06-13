@@ -13,5 +13,11 @@ output "compute_gallery" {
 # }
 
 output "current_subscription_id" {
+  description = "Subscription ID"
   value = data.azurerm_subscription.current.id
+}
+
+output "id" {
+  description = "VMSS Reource Group ID"
+  value = data.azurerm_resource_group.vmssrg.id
 }
