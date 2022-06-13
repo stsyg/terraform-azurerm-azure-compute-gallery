@@ -64,3 +64,8 @@ Choose required image SKU, e.g. 2019-Datacenter
 ```
 Get-AzVMImageSku -Location canadacentral -PublisherName MicrosoftWindowsServer -Offer WindowsServer
 ```
+## Network requirements
+There are several options to use Azure networking for Azure Image Builder Service. For more details, go to https://docs.microsoft.com/en-us/azure/virtual-machines/linux/image-builder-networking.
+## Private Link policy
+
+Private Endpoint Network Policy needs to be disabled for the target subnet. For more details, go to https://aka.ms/azvmimagebuildervnet.
