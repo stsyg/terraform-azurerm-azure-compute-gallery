@@ -127,7 +127,8 @@ resource "azurerm_role_definition" "aibIdentity" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment
 
 data "azurerm_user_assigned_identity" "aibfetch" {
-  name                = azurerm_user_assigned_identity.aib.name
+  name = "aibIdentity"
+#  name                = azurerm_user_assigned_identity.aib.name
   resource_group_name = azurerm_resource_group.acgrg.name
 }
 
