@@ -96,7 +96,8 @@ resource "azurerm_user_assigned_identity" "aib" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition
 resource "azurerm_role_definition" "aibIdentity" {
   name        = "aibIdentityRole"
-  scope       = azurerm_resource_group.acgrg.id
+	scope 			= data.azurerm_resource_group.vmssrg.id	
+#  scope       = azurerm_resource_group.acgrg.id
 #  scope       = data.azurerm_subscription.current.id
   description = "Azure Image Builder Image Definition Dev"
 
@@ -104,7 +105,11 @@ resource "azurerm_role_definition" "aibIdentity" {
 #     actions     = ["Microsoft.Compute/locations/usages/read"]
     actions     = ["Microsoft.Compute/images/write",
                    "Microsoft.Compute/images/read",
-                   "Microsoft.Compute/images/delete"]
+                   "Microsoft.Compute/images/delete",
+									 "Microsoft.Compute/galleries/read", 
+									 "Microsoft.Compute/galleries/images/read", 
+									 "Microsoft.Compute/galleries/images/versions/read", 
+									 "Microsoft.Compute/galleries/images/versions/write"]
     not_actions = []
   }
 
