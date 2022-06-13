@@ -127,9 +127,10 @@ resource "azurerm_role_definition" "aibIdentity" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment
 
 data "azurerm_user_assigned_identity" "aibfetch" {
-  name = "aibIdentity"
+  name                = "aibIdentity"
 #  name                = azurerm_user_assigned_identity.aib.name
-  resource_group_name = azurerm_resource_group.acgrg.name
+  resource_group_name =  "azure-compute-gallery-rg"
+#  resource_group_name = azurerm_resource_group.acgrg.name
 }
 
 #resource "azurerm_role_assignment" "aibIdentityAssignment" {
