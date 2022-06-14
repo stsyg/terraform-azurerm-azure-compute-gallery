@@ -51,7 +51,7 @@ resource "azurerm_storage_container" "imageco" {
 }
 
 resource "azurerm_storage_blob" "imageblob" {
-  name                   = "Azure Image Builder Blob"
+  name                   = "aib"
   storage_account_name   = azurerm_storage_account.imagesa.name
   storage_container_name = azurerm_storage_container.imageco.name
   type                   = "Block"
