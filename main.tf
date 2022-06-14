@@ -51,7 +51,7 @@ resource "azurerm_storage_container" "imageco" {
 }
 
 resource "azurerm_storage_blob" "imageblob" {
-  name                   = "aib"
+  name                   = "vmss.vhd"
   storage_account_name   = azurerm_storage_account.imagesa.name
   storage_container_name = azurerm_storage_container.imageco.name
   type                   = "Block"
@@ -195,7 +195,7 @@ resource "azurerm_image" "vmss" {
   os_disk {
     os_type  = "Windows"
     os_state = "Generalized"
-    blob_uri = "${azurerm_storage_blob.imageblob.url}/vmss-win2019.vhd"
+    blob_uri = azurerm_storage_blob.imageblob.url
     size_gb  = 128
   }
 }
