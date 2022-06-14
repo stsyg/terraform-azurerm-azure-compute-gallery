@@ -8,6 +8,14 @@ terraform {
         }
 }
 
+# Generate a random string (consisting of four characters)
+# https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
+resource "random_string" "random" {
+  length  = 4
+  upper   = false
+  special = false
+}
+
 # Create resource group
 resource "azurerm_resource_group" "acgrg" {
   location = var.deploy_location
@@ -24,7 +32,7 @@ resource "azurerm_resource_group" "acgrg" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
 resource "azurerm_storage_account" "imagesa" {
-  name                     = "storageaccountname"
+  name                     = "imagesa${random_string.random.id}"
   resource_group_name      = azurerm_resource_group.acgrg.name
   location                 = azurerm_resource_group.acgrg.location
   account_tier             = "Standard"
@@ -59,17 +67,8 @@ data "azurerm_subscription" "current" {
 #    subscription_id = subscription_id
 }
 
-data "azurerm_client_config" "example" {
-}
-
-# Generate a random string (consisting of four characters)
-# https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
-resource "random_string" "random" {
-  length  = 4
-  upper   = false
-  special = false
-}
-
+# data "azurerm_client_config" "example" {
+# }
 
 # Create Azure Compute Gallery (formerly Shared Image Gallery)
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery
