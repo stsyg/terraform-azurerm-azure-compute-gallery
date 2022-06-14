@@ -54,7 +54,7 @@ resource "azurerm_storage_blob" "imageblob" {
   name                   = "vmss.vhd"
   storage_account_name   = azurerm_storage_account.imagesa.name
   storage_container_name = azurerm_storage_container.imageco.name
-  type                   = "Block"
+  type                   = "Page"
 }
 
 # Fetch VMSS RG details
