@@ -55,7 +55,7 @@ resource "azurerm_storage_blob" "imageblob" {
   storage_account_name   = azurerm_storage_account.imagesa.name
   storage_container_name = azurerm_storage_container.imageco.name
   type                   = "Page"
-  size_gb                = 256
+  size                   = 512
 }
 
 # Fetch VMSS RG details
