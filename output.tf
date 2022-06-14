@@ -27,3 +27,8 @@ output "account_client_id" {
   description = "AIB managed identity Client ID"
   value = data.azurerm_user_assigned_identity.aibfetch.client_id
 }
+
+output "storage_account_blob_url" {
+  description = "Storage Account Blob URL"
+  value = data.azurerm_storage_blob.imageblob.url
+}

@@ -20,6 +20,36 @@ resource "azurerm_resource_group" "acgrg" {
   }
 }
 
+# Create storage account to store images
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
+
+resource "azurerm_storage_account" "imagesa" {
+  name                     = "storageaccountname"
+  resource_group_name      = azurerm_resource_group.acgrg.name
+  location                 = azurerm_resource_group.acgrg.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+
+  tags = {
+    environment = "Dev"
+    app         = "Azure Compute Gallery"
+    provisioner = "Terraform"
+  }
+}
+resource "azurerm_storage_container" "imageco" {
+  name                  = "content"
+  storage_account_name  = azurerm_storage_account.imagesa.name
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "imageblob" {
+  name                   = "Azure Image Builder Blob"
+  storage_account_name   = azurerm_storage_account.imagesa.name
+  storage_container_name = azurerm_storage_container.imageco.name
+  type                   = "Block"
+  source                 = "some-local-file.zip"
+}
+
 # Fetch VMSS RG details
 data "azurerm_resource_group" "vmssrg" {
   name = "st-vmss-rg"
@@ -167,6 +197,7 @@ resource "azurerm_role_assignment" "aibIdentityAssignment" {
 #   os_disk {
 #     os_type  = "Windows"
 #     os_state = "Generalized"
+#     blob_uri = "{blob_uri}"
 #     size_gb  = 128
 #   }
 # }
