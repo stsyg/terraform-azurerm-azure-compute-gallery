@@ -30,5 +30,5 @@ output "account_client_id" {
 
 output "storage_account_blob_url" {
   description = "Storage Account Blob URL"
-  value = data.azurerm_storage_blob.imageblob.url
+  value = azurerm_storage_blob.imageblob.url
 }
