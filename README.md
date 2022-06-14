@@ -79,3 +79,58 @@ az network vnet subnet update \
   --vnet-name $vnetName \
   --disable-private-link-service-network-policies true
 ```
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~>2.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~>2.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_resource_group.acgrg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_role_assignment.aibIdentityAssignment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_definition.aibIdentity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
+| [azurerm_shared_image.vmssimg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image) | resource |
+| [azurerm_shared_image_gallery.acg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/shared_image_gallery) | resource |
+| [azurerm_storage_account.imagesa](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) | resource |
+| [azurerm_storage_blob.imageblob](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob) | resource |
+| [azurerm_storage_container.imageco](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) | resource |
+| [azurerm_user_assigned_identity.aib](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
+| [random_string.random](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [azurerm_resource_group.vmssrg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
+| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
+| [azurerm_user_assigned_identity.aibfetch](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/user_assigned_identity) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_deploy_location"></a> [deploy\_location](#input\_deploy\_location) | The Azure Region in which all resources in this example should be created. | `string` | `"canadacentral"` | no |
+| <a name="input_rg_shared_name"></a> [rg\_shared\_name](#input\_rg\_shared\_name) | Name of the Resource group in which to deploy shared resources | `string` | `"azure-compute-gallery-rg"` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_account_client_id"></a> [account\_client\_id](#output\_account\_client\_id) | AIB managed identity Client ID |
+| <a name="output_account_object_id"></a> [account\_object\_id](#output\_account\_object\_id) | AIB managed identity Object (Principal) ID |
+| <a name="output_compute_gallery"></a> [compute\_gallery](#output\_compute\_gallery) | Azure Compute Gallery |
+| <a name="output_current_subscription_id"></a> [current\_subscription\_id](#output\_current\_subscription\_id) | Subscription ID |
+| <a name="output_id"></a> [id](#output\_id) | VMSS Reource Group ID |
+| <a name="output_location"></a> [location](#output\_location) | The Azure region |
+| <a name="output_storage_account_blob_url"></a> [storage\_account\_blob\_url](#output\_storage\_account\_blob\_url) | Storage Account Blob URL |
+<!-- END_TF_DOCS -->

@@ -28,7 +28,7 @@ resource "azurerm_resource_group" "acgrg" {
   }
 }
 
-# Create storage account to store images
+# Create storage account, container and blob to store images
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
 resource "azurerm_storage_account" "imagesa" {
@@ -186,17 +186,17 @@ resource "azurerm_role_assignment" "aibIdentityAssignment" {
 #   }
 # }
 
-# Create image
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
-resource "azurerm_image" "vmss" {
-  name                = "vmss-win2019"
-  location            = azurerm_resource_group.acgrg.location
-  resource_group_name = azurerm_resource_group.acgrg.name
-
-  os_disk {
-    os_type  = "Windows"
-    os_state = "Generalized"
-    blob_uri = azurerm_storage_blob.imageblob.url
-    size_gb  = 128
-  }
-}
+# # Create image
+# # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
+# resource "azurerm_image" "vmss" {
+#   name                = "vmss-win2019"
+#   location            = azurerm_resource_group.acgrg.location
+#   resource_group_name = azurerm_resource_group.acgrg.name
+# 
+#   os_disk {
+#     os_type  = "Windows"
+#     os_state = "Generalized"
+#     blob_uri = azurerm_storage_blob.imageblob.url
+#     size_gb  = 128
+#   }
+# }
