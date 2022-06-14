@@ -195,7 +195,7 @@ resource "azurerm_image" "vmss" {
   os_disk {
     os_type  = "Windows"
     os_state = "Generalized"
-    blob_uri = azurerm_storage_blob.imageblob.url
+    blob_uri = "${azurerm_storage_blob.imageblob.url}/vmss-win2019.vhd"
     size_gb  = 128
   }
 }
