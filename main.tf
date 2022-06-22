@@ -1,14 +1,4 @@
-﻿# Terraform Cloud configuration
-terraform {
-        backend "remote" {
-            organization = "The38Dev"
-            workspaces {
-                name = "AzureComputeGallery"
-            }
-        }
-}
-
-# Generate a random string (consisting of four characters)
+﻿# Generate a random string (consisting of four characters)
 # https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string
 resource "random_string" "random" {
   length  = 4
