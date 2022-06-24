@@ -3,7 +3,7 @@ terraform {
         backend "remote" {
             organization = "The38Dev"
             workspaces {
-                name = "AzureComputeGallery"
+                name = "terraform-azurerm-azure-compute-gallery"
             }
         }
 }
