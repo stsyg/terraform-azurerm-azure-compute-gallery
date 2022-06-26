@@ -5,9 +5,16 @@ Terraform used to configure Azure Compute Gallery. It also creates image definit
 
 Register for Azure Image Builder Feature. Wait until RegistrationState is set to 'Registered'
 
+PowerShell
 ```
 Register-AzProviderFeature -FeatureName VirtualMachineTemplatePreview -ProviderNamespace Microsoft.VirtualMachineImages
 Get-AzProviderFeature -FeatureName VirtualMachineTemplatePreview -ProviderNamespace Microsoft.VirtualMachineImages
+```
+Azure CLI
+```
+az feature register --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview
+az feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview
+
 ```
 
 Check you are registered for the providers, ensure RegistrationState is set to 'Registered'.
