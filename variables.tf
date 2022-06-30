@@ -9,3 +9,8 @@ variable "rg_shared_name" {
   default     = "azure-compute-gallery-rg"
   description = "Name of the Resource group in which to deploy shared resources"
 }
+
+variable "default_tags" {
+  type = map
+  description = "Map default tags"
+}

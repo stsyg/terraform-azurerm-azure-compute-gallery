@@ -11,11 +11,7 @@ resource "azurerm_resource_group" "acgrg" {
   location = var.deploy_location
   name     = var.rg_shared_name
 
-    tags = {
-    environment = "Dev"
-    app         = "Azure Compute Gallery"
-    provisioner = "Terraform"
-  }
+  tags = var.default_tags
 }
 
 # Create storage account, container and blob to store images
@@ -28,11 +24,7 @@ resource "azurerm_storage_account" "imagesa" {
   account_tier             = "Standard"
   account_replication_type = "GRS"
 
-  tags = {
-    environment = "Dev"
-    app         = "Azure Compute Gallery"
-    provisioner = "Terraform"
-  }
+  tags = var.default_tags
 }
 resource "azurerm_storage_container" "imageco" {
   name                  = "content"
@@ -55,7 +47,7 @@ data "azurerm_resource_group" "vmssrg" {
 
 # Fetch subscription details
 data "azurerm_subscription" "current" {
-#    subscription_id = subscription_id
+  #    subscription_id = subscription_id
 }
 
 # data "azurerm_client_config" "example" {
@@ -69,11 +61,7 @@ resource "azurerm_shared_image_gallery" "acg" {
   location            = azurerm_resource_group.acgrg.location
   description         = "VM images"
 
-  tags = {
-    environment = "Dev"
-    app         = "Azure Compute Gallery"
-    provisioner = "Terraform"
-  }
+  tags = var.default_tags
 }
 
 # Create image definition
@@ -95,49 +83,43 @@ resource "azurerm_shared_image" "vmssimg" {
     sku       = "2019-Datacenter"
   }
 
-  tags = {
-    environment = "Dev"
-    provisioner = "Terraform"
-  }
+  tags = var.default_tags
 }
 
 # Create an Azure user-assigned managed identity
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity
 # aibIdentity = Azure Image Builder Identity
 resource "azurerm_user_assigned_identity" "aib" {
-  name = "aibIdentity"
+  name                = "aibIdentity"
   resource_group_name = azurerm_resource_group.acgrg.name
   location            = azurerm_resource_group.acgrg.location
-  tags = {
-    environment = "Dev"
-    provisioner = "Terraform"
-  }
+  tags = var.default_tags
 }
 
 # Create an Azure role definition
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition
 resource "azurerm_role_definition" "aibIdentity" {
-  name        = "aibIdentityRole"
-	scope 			= data.azurerm_resource_group.vmssrg.id	
-#  scope       = azurerm_resource_group.acgrg.id
-#  scope       = data.azurerm_subscription.current.id
+  name  = "aibIdentityRole"
+  scope = data.azurerm_resource_group.vmssrg.id
+  #  scope       = azurerm_resource_group.acgrg.id
+  #  scope       = data.azurerm_subscription.current.id
   description = "Azure Image Builder Image Definition Dev"
 
   permissions {
-    actions     = ["Microsoft.Compute/images/write",
-                   "Microsoft.Compute/images/read",
-                   "Microsoft.Compute/images/delete",
-									 "Microsoft.Compute/galleries/read", 
-									 "Microsoft.Compute/galleries/images/read", 
-									 "Microsoft.Compute/galleries/images/versions/read", 
-									 "Microsoft.Compute/galleries/images/versions/write", 
-                   "Microsoft.Network/virtualNetworks/read", 
-                   "Microsoft.Network/virtualNetworks/subnets/join/action"]
+    actions = ["Microsoft.Compute/images/write",
+      "Microsoft.Compute/images/read",
+      "Microsoft.Compute/images/delete",
+      "Microsoft.Compute/galleries/read",
+      "Microsoft.Compute/galleries/images/read",
+      "Microsoft.Compute/galleries/images/versions/read",
+      "Microsoft.Compute/galleries/images/versions/write",
+      "Microsoft.Network/virtualNetworks/read",
+    "Microsoft.Network/virtualNetworks/subnets/join/action"]
     not_actions = []
   }
 
   assignable_scopes = [
-		data.azurerm_resource_group.vmssrg.id,
+    data.azurerm_resource_group.vmssrg.id,
     azurerm_resource_group.acgrg.id,
     data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
   ]
@@ -152,11 +134,11 @@ data "azurerm_user_assigned_identity" "aibfetch" {
 }
 
 resource "azurerm_role_assignment" "aibIdentityAssignment" {
-#  name               = "00000000-0000-0000-0000-000000000000"
+  #  name               = "00000000-0000-0000-0000-000000000000"
   scope              = data.azurerm_subscription.current.id
   role_definition_id = azurerm_role_definition.aibIdentity.role_definition_resource_id
-#  principal_id       = data.azurerm_client_config.example.object_id
-  principal_id       = data.azurerm_user_assigned_identity.aibfetch.principal_id
+  #  principal_id       = data.azurerm_client_config.example.object_id
+  principal_id = data.azurerm_user_assigned_identity.aibfetch.principal_id
 }
 
 # # Update image definition version
