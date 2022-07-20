@@ -14,7 +14,7 @@ output "current_subscription_id" {
 }
 
 output "id" {
-  description = "VMSS Reource Group ID"
+  description = "VMSS Resource Group ID"
   value       = data.azurerm_resource_group.vmssrg.id
 }
 
