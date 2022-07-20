@@ -1,4 +1,4 @@
-output "location" {
+﻿output "location" {
   description = "The Azure region"
   value       = azurerm_resource_group.acgrg.location
 }
@@ -20,12 +20,12 @@ output "id" {
 
 output "account_object_id" {
   description = "AIB managed identity Object (Principal) ID"
-  value       = data.azurerm_user_assigned_identity.aibfetch.principal_id
+  value       = azurerm_user_assigned_identity.aib.principal_id
 }
 
 output "account_client_id" {
   description = "AIB managed identity Client ID"
-  value       = data.azurerm_user_assigned_identity.aibfetch.client_id
+  value       = azurerm_user_assigned_identity.aib.client_id
 }
 
 output "storage_account_blob_url" {
