@@ -13,10 +13,11 @@ output "current_subscription_id" {
   value       = data.azurerm_subscription.current.id
 }
 
-output "id" {
-  description = "VMSS Resource Group ID"
-  value       = data.azurerm_resource_group.vmssrg.id
-}
+# removed to run feature_kv branch only
+# output "id" {
+#   description = "VMSS Resource Group ID"
+#   value       = data.azurerm_resource_group.vmssrg.id
+# }
 
 output "account_object_id" {
   description = "AIB managed identity Object (Principal) ID"

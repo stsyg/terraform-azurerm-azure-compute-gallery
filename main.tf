@@ -40,14 +40,30 @@ resource "azurerm_storage_blob" "imageblob" {
   size                   = 512
 }
 
-# Fetch VMSS RG details
-data "azurerm_resource_group" "vmssrg" {
-  name = "st-vmss-rg"
-}
+# # Fetch VMSS RG details
+# data "azurerm_resource_group" "vmssrg" {
+#   name = "st-vmss-rg"
+# }
 
 # Fetch subscription details
 data "azurerm_subscription" "current" {
   #    subscription_id = subscription_id
+}
+
+#########################################################
+# Feature: Read existing Key Vault data
+#########################################################
+data "azurerm_key_vault" "infra" {
+  name                = "keyvaultb2f5cd5138"
+  resource_group_name = "infra-keyvault-rg"
+}
+
+output "vault_uri" {
+  value = data.azurerm_key_vault.infra.vault_uri
+}
+
+output "vault_id" {
+  value = data.azurerm_key_vault.infra.id
 }
 
 # data "azurerm_client_config" "example" {
@@ -100,13 +116,17 @@ resource "azurerm_user_assigned_identity" "aib" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition
 resource "azurerm_role_definition" "aibIdentity" {
   name  = "aibIdentityRole"
-  scope = data.azurerm_resource_group.vmssrg.id
+#  scope = data.azurerm_resource_group.vmssrg.id # removed to run feature_kv branch only
+  scope = azurerm_resource_group.acgrg.id
+
+
   #  scope       = azurerm_resource_group.acgrg.id
   #  scope       = data.azurerm_subscription.current.id
   description = "Azure Image Builder Image Definition Dev"
 
   permissions {
-    actions = ["Microsoft.Compute/images/write",
+    actions = [
+      "Microsoft.Compute/images/write",
       "Microsoft.Compute/images/read",
       "Microsoft.Compute/images/delete",
       "Microsoft.Compute/galleries/read",
@@ -114,14 +134,17 @@ resource "azurerm_role_definition" "aibIdentity" {
       "Microsoft.Compute/galleries/images/versions/read",
       "Microsoft.Compute/galleries/images/versions/write",
       "Microsoft.Network/virtualNetworks/read",
-    "Microsoft.Network/virtualNetworks/subnets/join/action"]
+      "Microsoft.Network/virtualNetworks/subnets/join/action",
+      "Microsoft.KeyVault/vaults/secrets/read"
+      ]
     not_actions = []
   }
 
   assignable_scopes = [
-    data.azurerm_resource_group.vmssrg.id,
+  #  data.azurerm_resource_group.vmssrg.id, # removed to run feature_kv branch only
     azurerm_resource_group.acgrg.id,
-    data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
+  #  data.azurerm_subscription.current.id, # /subscriptions/00000000-0000-0000-0000-000000000000
+    data.azurerm_key_vault.infra.id # Existing Key Vault URI
   ]
 }
 
@@ -135,9 +158,11 @@ resource "azurerm_role_definition" "aibIdentity" {
 
 resource "azurerm_role_assignment" "aibIdentityAssignment" {
   #  name               = "00000000-0000-0000-0000-000000000000"
-  scope              = data.azurerm_subscription.current.id
+#  scope              = data.azurerm_subscription.current.id # removed to run feature_kv branch only
+  scope              = data.azurerm_key_vault.infra.id
+
   role_definition_id = azurerm_role_definition.aibIdentity.role_definition_resource_id
-  #  principal_id       = data.azurerm_client_config.example.object_id
+  # principal_id       = data.azurerm_client_config.example.object_id
   # principal_id = data.azurerm_user_assigned_identity.aibfetch.principal_id
   principal_id = azurerm_user_assigned_identity.aib.principal_id
 }
